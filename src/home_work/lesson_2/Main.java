@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
+
         // Первое задание
         System.out.println("Первое задание:");
         int[] arr = {1,1,0,1,0,0,1,1,0};
