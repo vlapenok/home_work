@@ -86,8 +86,9 @@ class Cross {
     public static void playerStep() {
         int x, y;
         do {
-            System.out.println("Введите координаты: X Y (1-3)");
+            System.out.print("Введите координату Х: ");
             x = sc.nextInt() - 1;
+            System.out.print("Введите координату Y: ");
             y = sc.nextInt() - 1;
         } while(!isCellValid(y, x));
         setSym(y, x, player);
@@ -104,36 +105,11 @@ class Cross {
     }
 
     static boolean checkWin(char sym) {
-        // 	for (int i = 0; i < 3; i++) {
-        // if(field[i][0] == sym && field[i][1] == sym && field[i][2] == sym) return true;
-        // else if(field[0][i] == sym && field[1][i] == sym && field[2][i] == sym) return true;
-        // else if(field[i][i] == sym && field[i][i] == sym && field[i][i] == sym) return true;
-        // 	}
-
-
-        if (field[0][0] == sym && field[0][1] == sym && field[0][2] == sym) {
-            return true;
-        }
-        if (field[1][0] == sym && field[1][1] == sym && field[1][2] == sym) {
-            return true;
-        }
-        if (field[2][0] == sym && field[2][1] == sym && field[2][2] == sym) {
-            return true;
-        }
-        if (field[0][0] == sym && field[1][0] == sym && field[2][0] == sym) {
-            return true;
-        }
-        if (field[0][1] == sym && field[1][1] == sym && field[2][1] == sym) {
-            return true;
-        }
-        if (field[0][2] == sym && field[1][2] == sym && field[2][2] == sym) {
-            return true;
-        }
-        if (field[0][0] == sym && field[1][1] == sym && field[2][2] == sym) {
-            return true;
-        }
-        if (field[2][0] == sym && field[1][1] == sym && field[0][2] == sym) {
-            return true;
+        for (int i = 0; i < 3; i++) {
+            if(field[i][0] == sym && field[i][1] == sym && field[i][2] == sym) return true;
+            else if(field[0][i] == sym && field[1][i] == sym && field[2][i] == sym) return true;
+            else if(field[0][0] == sym && field[1][1] == sym && field[2][2] == sym) return true;
+            else if(field[2][0] == sym && field[1][1] == sym && field[0][2] == sym) return true;
         }
         return false;
     }
