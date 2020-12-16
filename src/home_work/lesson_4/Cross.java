@@ -1,84 +1,116 @@
 package home_work.lesson_4;
 
-import java.util.Random;
 import java.util.Scanner;
+import java.util.Random;
 
-public class Cross {
+class Cross {
 
-    static int SIZE_X = 3;
-    static int SIZE_Y = 3;
+    static int size_x = 3;
+    static int size_y = 3;
 
-    static char[][] field = new char[SIZE_Y][SIZE_X];
-    static Scanner scanner = new Scanner(System.in);
-    static Random random = new Random();
+    static char[][] field = new char[size_y][size_x];
+    static Scanner sc = new Scanner(System.in);
+    static Random rnd = new Random();
 
-    static char PLAYER_DOT = 'X';
-    static char AI_DOT = 'O';
-    static char EMPTY_DOT = '.';
+    static char player = 'X';
+    static char skyNet = 'O';
+    static char dot = '.';
 
-    static void initField() {
-        for (int i = 0; i < SIZE_Y; i++) {
-            for (int j = 0; j < SIZE_X; j++) {
-                field[i][j] = EMPTY_DOT;
+    public static void main(String[] args) {
+        initField(); // Заполняем массив точками
+        printField(); // Выводим массив на печать
+
+        while (true) {
+            playerStep();
+            printField();
+            if (checkWin(player)) {
+                System.out.println("Человек выйграл!");
+                break;
+            }
+            if (isCellFull()) {
+                System.out.println("Ничья");
+                break;
+            }
+            skyNetStep();
+            printField();
+            if (checkWin(skyNet)) {
+                System.out.println("SkyNet выйграл");
+                break;
+            }
+            if (isCellFull()) {
+                System.out.println("Ничья");
+                break;
+            }
+        }
+
+    }
+
+    public static void initField() {
+        for (int i = 0; i < size_y; i++) {
+            for (int j = 0; j < size_x; j++) {
+                field[i][j] = dot;
             }
         }
     }
 
-    static void printField() {
+    public static void printField() {
         System.out.println("-------");
-        for (int i = 0; i < SIZE_Y; i++) {
-            System.out.print("|");
-            for (int j = 0; j < SIZE_X; j++) {
-                System.out.print(field[i][j] + "|");
+        for (int i = 0; i < size_y; i++) {
+            for (int j = 0; j < size_x; j++) {
+                System.out.print("|" + field[i][j]);
             }
-            System.out.println();
+            System.out.print("|\n");
         }
         System.out.println("-------");
     }
 
-    static boolean isCellValid(int y, int x) {
-        if (x < 0 || y < 0 || x > SIZE_X - 1 || y > SIZE_Y - 1) {
-            return false;
-        }
-        return field[y][x] == EMPTY_DOT;
+    public static void setSym(int y, int x, char sym) {
+        field[y][x] = sym;
     }
 
-    static boolean isFieldFull() {
-        for (int i = 0; i < SIZE_Y; i++) {
-            for (int j = 0; j < SIZE_X; j++) {
-                if (field[i][j] == EMPTY_DOT) {
-                    return false;
-                }
+    public static boolean isCellValid(int y, int x) {
+        if(x >= 0 || y >= 0 || x < size_y || y < size_x) return field[y][x] == dot;
+        else return false;
+    }
+
+    public static boolean isCellFull() {
+        for (int i = 0; i < size_y; i++) {
+            for (int j = 0; j < size_x; j++) {
+                if(field[i][j] == dot) return false;
             }
+
         }
         return true;
     }
 
-    static void setSym(int y, int x, char sym) {
-        field[y][x] = sym;
-    }
-
-    static void playerStep() {
-        int x,y;
+    public static void playerStep() {
+        int x, y;
         do {
             System.out.println("Введите координаты: X Y (1-3)");
-            x = scanner.nextInt() - 1;
-            y = scanner.nextInt() - 1;
-        } while (!isCellValid(y,x));
-        setSym(y,x, PLAYER_DOT);
+            x = sc.nextInt() - 1;
+            y = sc.nextInt() - 1;
+        } while(!isCellValid(y, x));
+        setSym(y, x, player);
     }
 
-    static void aiStep() {
-        int x,y;
+    public static void skyNetStep() {
+        int x, y;
         do {
             System.out.println("Ходит SkyNet");
-            x = random.nextInt(SIZE_X);
-            y = random.nextInt(SIZE_Y);
-        } while (!isCellValid(y,x));
-        setSym(y,x, AI_DOT);
+            x = rnd.nextInt(size_x);
+            y = rnd.nextInt(size_y);
+        } while(!isCellValid(y, x));
+        setSym(y, x, skyNet);
     }
 
     static boolean checkWin(char sym) {
+        // 	for (int i = 0; i < 3; i++) {
+        // if(field[i][0] == sym && field[i][1] == sym && field[i][2] == sym) return true;
+        // else if(field[0][i] == sym && field[1][i] == sym && field[2][i] == sym) return true;
+        // else if(field[i][i] == sym && field[i][i] == sym && field[i][i] == sym) return true;
+        // 	}
+
+
         if (field[0][0] == sym && field[0][1] == sym && field[0][2] == sym) {
             return true;
         }
@@ -88,7 +120,6 @@ public class Cross {
         if (field[2][0] == sym && field[2][1] == sym && field[2][2] == sym) {
             return true;
         }
-
         if (field[0][0] == sym && field[1][0] == sym && field[2][0] == sym) {
             return true;
         }
@@ -98,7 +129,6 @@ public class Cross {
         if (field[0][2] == sym && field[1][2] == sym && field[2][2] == sym) {
             return true;
         }
-
         if (field[0][0] == sym && field[1][1] == sym && field[2][2] == sym) {
             return true;
         }
@@ -106,35 +136,5 @@ public class Cross {
             return true;
         }
         return false;
-    }
-
-    public static void main(String[] args) {
-        initField();
-        printField();
-
-        while (true) {
-            playerStep();
-            printField();
-            if (checkWin(PLAYER_DOT)) {
-                System.out.println("Player WIN!");
-                break;
-            }
-            if (isFieldFull()) {
-                System.out.println("DRAW");
-                break;
-            }
-            aiStep();
-            printField();
-            if (checkWin(AI_DOT)) {
-                System.out.println("WIN SkyNet");
-                break;
-            }
-            if (isFieldFull()) {
-                System.out.println("DRAW");
-                break;
-            }
-        }
-
-
     }
 }
