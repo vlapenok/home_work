@@ -1,4 +1,4 @@
-package home_work.lesson_5;
+package home_work.lesson_5; // ДЗ по ООП
 
 public class Employee {
     String name;
