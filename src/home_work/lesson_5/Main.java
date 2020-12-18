@@ -1,4 +1,4 @@
-package home_work.lesson_5;
+package home_work.lesson_5; // ДЗ по ООП
 
 public class Main {
     public static void main(String[] args) {
