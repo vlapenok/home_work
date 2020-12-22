@@ -6,3 +6,4 @@ public class Dog extends Animal {
         super("Собака", name, run, swim, jump);
     }
 }
+
