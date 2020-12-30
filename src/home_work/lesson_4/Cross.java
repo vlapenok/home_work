@@ -3,7 +3,7 @@ package home_work.lesson_4;
 import java.util.Scanner;
 import java.util.Random;
 
-class Cross {
+public class Cross {
 
     static int size_x = 3;
     static int size_y = 3;
